@@ -1,0 +1,25 @@
+{
+  "name": "project-genai",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "nextagentclaw-build": "./index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@clack/core": "^1.4.1",
+    "@clack/prompts": "^1.5.1",
+    "@openrouter/ai-sdk-provider": "^2.9.0",
+    "@types/node": "^25.9.1",
+    "ai": "^6.0.197",
+    "chalk": "^5.6.2",
+    "commender": "^0.0.1-security",
+    "figlet": "^1.11.0"
+  }
+}
