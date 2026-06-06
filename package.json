@@ -7,7 +7,8 @@
     "nextagentclaw-build": "./index.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/marked-terminal": "^6.1.1"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -20,6 +21,8 @@
     "ai": "^6.0.197",
     "chalk": "^5.6.2",
     "commender": "^0.0.1-security",
-    "figlet": "^1.11.0"
+    "figlet": "^1.11.0",
+    "marked": "^18.0.5",
+    "marked-terminal": "^7.3.0"
   }
 }
