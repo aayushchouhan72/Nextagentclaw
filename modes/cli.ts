@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { select, isCancel } from "@clack/prompts";
 import { runAgentMode } from "./agent/orchestrator";
+import { runAskMode } from "./ask/orchestrator";
 
 export async function runCliMode() {
   while (true) {
@@ -24,6 +25,7 @@ export async function runCliMode() {
     }
     if (mode === "ask") {
       console.log("ask");
+      await runAskMode();
     }
     if (mode !== "agent" && mode !== "plan" && mode !== "ask") {
       console.log(chalk.yellow("\n That mode is not avilable yet \n"));
