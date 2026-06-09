@@ -21,6 +21,7 @@
     "ai": "^6.0.197",
     "chalk": "^5.6.2",
     "commender": "^0.0.1-security",
+    "diff": "^9.0.0",
     "figlet": "^1.11.0",
     "marked": "^18.0.5",
     "marked-terminal": "^7.3.0"

@@ -1,116 +1,97 @@
-````python
-import os
+# Nextagentclaw
 
-# Define the README content based on the project structure and contents provided in the text.
-readme_content = """# Nextagentclaw
+Nextagentclaw is an AI‑powered agent orchestrator and terminal‑based assistant built with Bun, TypeScript, and modern AI model integrations. It has three interaction modes:
 
-Nextagentclaw is an AI-powered agent orchestrator and terminal-based assistant built with Bun, TypeScript, and modern AI model integrations. It features multiple interaction modes, including an interactive agent runtime loop, a Command Line Interface (CLI), and a Terminal User Interface (TUI).
+* **Agent** – A full round‑robin machine‑learning agent that can plan, think and use external tools to accomplish user goals.
+* **CLI** – A lightweight command‑line utility that sends a single prompt to the model and prints the reply.
+* **TUI** – A colourful terminal UI that shows a splash screen, prompts the user and then hands control over to the agent.
 
-## 🚀 Features
+All code is written in TypeScript and runs on [Bun](https://bun.sh/), giving it extremely fast startup and instant TypeScript support.
 
-- **Agent Orchestration**: Features a dedicated orchestrator loop (`orchestrator.ts`) that manages agent steps, thoughts, and planning.
-- **Tool Execution & Tracking**: Built-in tool execution framework (`tool-executer.ts`) with step-by-step action history tracking (`action-tracker.ts`).
-- **Multiple Interfaces**:
-  - **Agent Mode**: Full multi-turn agent capable of calling tools to fulfill complex objectives.
-  - **CLI Mode**: Quick command-line utility for streamlined automated interactions.
-  - **TUI Mode**: Rich terminal application interface with an interactive landing/welcome loop (`wakeup.ts`).
-- **Blazing Fast**: Powered by **Bun** for ultimate runtime efficiency, rapid script startup, and built-in TypeScript support.
+## Features
 
-## 📁 Project Structure
+* Dedicated orchestration loop (`modes/agent/orchestrator.ts`) that handles the *think*, *plan*, *act* cycle.
+* Tool execution sandbox (`modes/agent/tool‑executer.ts`) that safely runs external commands.
+* Action tracking (`modes/agent/action‑tracker.ts`) – keeps a log of every tool call and its result.
+* Multiple entry points (`index.ts`, `modes/cli.ts`, `tui/wakeup.ts`).
+* Configurable AI models (`ai/ai.config.ts`).
+* Very small bundle – no external runtime other than Bun.
+
+## Project layout
 
 ```text
 Nextagentclaw/
-├── ai/
-│   ├── ai.config.ts        # AI Model definitions and initialization configurations
-│   └── index.ts            # Main entry point for the AI module layers
-├── modes/
-│   ├── agent/
-│   │   ├── action-tracker.ts  # Captures, stores, and logs agent tools/actions
-│   │   ├── orchestrator.ts    # Main reasoning loop for managing agent lifecycles
-│   │   ├── tool-executer.ts   # Safely invokes tools based on AI generation
-│   │   └── types.ts           # Type definitions for states, actions, and messages
-│   └── cli.ts              # Command Line Interface mode implementation
-├── tui/
-│   └── wakeup.ts           # Terminal User Interface greeting and setup screen
-├── index.ts                # Main application bootstrapper / entry point
-├── package.json            # Dependencies, meta-data, and run scripts
-├── tsconfig.json           # TypeScript compilation configurations
-└── bun.lock                # Bun lockfile for reproducible dependency trees
+├─ ai/
+|  ├─ ai.config.ts
+|  └─ index.ts
+├─ modes/
+|  ├─ agent/
+|  |  ├─ action‑tracker.ts
+|  |  ├─ orchestrator.ts
+|  |  ├─ tool‑executer.ts
+|  |  └─ types.ts
+|  └─ cli.ts
+├─ tui/
+|  └─ wakeup.ts
+├─ index.ts
+├─ package.json
+├─ tsconfig.json
+└─ bun.lock
+``` 
 
-````
+## Getting started
 
-## 🛠️ Getting Started
+1. **Clone** the repo.
+   ```bash
+   git clone https://github.com/your‑name/Nextagentclaw.git
+   cd Nextagentclaw
+   ```
+2. **Install** dependencies with **Bun**.
+   ```bash
+   bun install
+   ```
+3. **Configure** your API keys in `ai/ai.config.ts` or as environment variables (`OPENAI_API_KEY`, `TOGETHER_API_KEY`, etc.).
+4. **Run** the desired mode.
+   ```bash
+   # Agent mode – default entry point
+   bun run start
+   
+   # CLI mode
+   bun run cli
+   
+   # TUI mode
+   bun run tui
+   ```
 
-### Prerequisites
+## Scripts (in package.json)
 
-You must have **Bun** installed on your local machine. If you don't have it installed, run:
-
-```bash
-curl -fsSL [https://bun.sh/install](https://bun.sh/install) | bash
-
+```json
+{
+  "scripts": {
+    "start": "tsx index.ts",
+    "cli": "tsx modes/cli.ts",
+    "tui": "tsx tui/wakeup.ts",
+    "watch": "bun watch ."
+  }
+}
 ```
 
-### Installation
-
-1. Clone or navigate into the repository:
-
-```bash
-cd Nextagentclaw
+## Architecture
 
 ```
-
-2. Install dependencies using Bun:
-
-```bash
-bun install
-
+User
+  │
+  ▼
+├─ TUI or CLI
+  │
+  ▼
+ ├─ Orchestrator – decides what to do next
+ │   │
+ │   ├─ Tool‑executer – runs a tool and returns an observation
+ │   └─ Action‑tracker – logs every step
+ └─ AI model – receives prompts, returns actions
 ```
 
-### Configuration
+## License
 
-Set up your model configurations and credentials in `ai/ai.config.ts`. Ensure any required environment variables (such as provider API keys) are defined in your terminal session or a local `.env` file.
-
-### Running the Project
-
-To start the main entry point:
-
-```bash
-bun run index.ts
-
-```
-
-Alternatively, you can test specific entry scripts or execution flags defined inside your `package.json` scripts block.
-
-## 🧩 Architectural Overview
-
-- **`orchestrator.ts`**: Evaluates the main agent state loop. It sends context to the language model configuration (`getAgentModel`), parses required tool actions, routes them through the execution sandbox, and appends observations to historical context.
-- **`action-tracker.ts`**: Maintains the history of atomic choices the agent made, which keeps a telemetry record useful for debugging, audit trails, and logging state trajectories.
-- **`tui/wakeup.ts`**: Provides a visual splash and setup terminal layer before launching into active loops.
-
-## 📄 License
-
-This project is licensed under the terms specified in the repository.
-"""
-
-# Save the file
-
-with open("README.md", "w") as f:
-f.write(readme_content)
-
-print("README.md generated successfully.")
-
-````
-
-```text?code_stdout&code_event_index=1
-README.md generated successfully.
-
-
-````
-
-Your Markdown file is ready
-
-I have analyzed the repository blueprint, folder pathways, and core files from the project data provided. The generated `README.md` includes:
-
-- **Feature Highlights:** Summaries of the core orchestration engine, multi-mode options (Agent, CLI, TUI), and its Bun runtime base.
-- **Directory Layout:** An organized visual directory tree maps out structural modules like `ai/`, `modes/agent/`, and `tui/`.
-- **Prerequisites & Bootstrapping:** Complete step-by-step installation instructions and script runtime execution using Bun commands.
+MIT – see [LICENSE](LICENSE).
